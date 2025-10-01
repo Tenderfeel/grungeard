@@ -1,0 +1,47 @@
+[debug] [2025-10-01T13:55:05.616Z] ----------------------------------------------------------------------
+[debug] [2025-10-01T13:55:05.618Z] Command:       /nix/store/ws50yvm6vzlzf7jzz6n7xh4szddrack1-nodejs-20.19.1/bin/node /nix/store/a3jfkfzmr1h8lmk31a8fbchkg5sp12q9-firebase-tools-14.16.0/lib/node_modules/firebase-tools/lib/bin/firebase.js init hosting
+[debug] [2025-10-01T13:55:05.618Z] CLI Version:   14.16.0
+[debug] [2025-10-01T13:55:05.618Z] Platform:      linux
+[debug] [2025-10-01T13:55:05.619Z] Node Version:  v20.19.1
+[debug] [2025-10-01T13:55:05.619Z] Time:          Wed Oct 01 2025 13:55:05 GMT+0000 (Coordinated Universal Time)
+[debug] [2025-10-01T13:55:05.619Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2025-10-01T13:55:05.623Z] Checked if tokens are valid: true, expires at: 1759330386804
+[debug] [2025-10-01T13:55:05.623Z] Checked if tokens are valid: true, expires at: 1759330386804
+[debug] [2025-10-01T13:55:05.626Z] >>> [apiv2][query] GET https://monospace-pa.googleapis.com/v1/workspaces/grungeard-87112329 [none]
+[debug] [2025-10-01T13:55:06.629Z] <<< [apiv2][status] GET https://monospace-pa.googleapis.com/v1/workspaces/grungeard-87112329 200
+[debug] [2025-10-01T13:55:06.629Z] <<< [apiv2][body] GET https://monospace-pa.googleapis.com/v1/workspaces/grungeard-87112329 {"workspaceId":"grungeard-87112329","name":"grungeard","workspaceRedirectUrl":"firebase-grungeard-1759325703780.cluster-iktsryn7xnhpexlu6255bftka4.cloudworkstations.dev","status":"WORKSPACE_STATUS_RUNNING","lastAccessDatetime":"2025-10-01T13:55:03.799462Z","workspaceTemplate":"WORKSPACE_TEMPLATE_BLANK_WEB","owner":"SELF","serviceAccountEmail":"msp-2338107363530550080@monospace-per-ws-sa-5.iam.gserviceaccount.com","enableNix":true,"ownerEmail":"tenderfeel@gmail.com","workspaceImageUrl":"https://www.gstatic.com/monospace/231115/logo_nextjs.svg","templateArgs":"{\"language\":\"ts\",\"srcDir\":true,\"eslint\":true,\"app\":true,\"tailwind\":false,\"__agentic_workspace\":true}","templateRepoUrl":"file:///usr/local/monospace/templates/public/nextjs","workstationAccessToken":"eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJodHRwczovL2Nsb3VkLmdvb2dsZS5jb20vd29ya3N0YXRpb25zIiwiYXVkIjoiZmlyZWJhc2UtZ3J1bmdlYXJkLTE3NTkzMjU3MDM3ODAuY2x1c3Rlci1pa3RzcnluN3huaHBleGx1NjI1NWJmdGthNC5jbG91ZHdvcmtzdGF0aW9ucy5kZXYiLCJpYXQiOjE3NTkzMjY5MDYsImV4cCI6MTc1OTQxMzMwNn0.iEdRprCnqjpsL1G4bL0T61z8MJKUQzMbSw1JEW6UBFQNo0Gn-1JjB2a2IiMpWgk9PDlD908H5NssYxtuymT60kEo_iyC8GzY3naIwAPIy4rUdw92oF-ESoSOOp-w4yGTGJiHdlcfvLyosAqMbplvnRC2r69E1H_PhUh2gxMbln-_8M3pset_YSVgZnFmLCBdNii9ph84gBjuOS8psQCpvzxGbglHV8yPV7GPqEYf0hf86eo_FuMXCoRwiKwyPccIPaKovbfNXJkopUa1MDAFUNcpwJuEd02PWEH6SA0lV9hDbCJMK2m9BxMls0BFxCqAnCTH77EOYQcettNgKisGLQ","firebaseProjectId":"grungeard-6962a"}
+[debug] [2025-10-01T13:55:06.630Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform","https://www.googleapis.com/auth/userinfo.email"]
+[debug] [2025-10-01T13:55:06.631Z] > authorizing via signed-in user (tenderfeel@gmail.com)
+[info] 
+     ######## #### ########  ######## ########     ###     ######  ########
+     ##        ##  ##     ## ##       ##     ##  ##   ##  ##       ##
+     ######    ##  ########  ######   ########  #########  ######  ######
+     ##        ##  ##    ##  ##       ##     ## ##     ##       ## ##
+     ##       #### ##     ## ######## ########  ##     ##  ######  ########
+
+You're about to initialize a Firebase project in this directory:
+
+  /home/user/grungeard
+
+[info] 
+=== Project Setup
+[info] 
+[info] First, let's associate this project directory with a Firebase project.
+[info] You can create multiple project aliases by running firebase use --add, 
+[info] but for now we'll just set up a default project.
+[info] 
+[debug] [2025-10-01T13:55:06.643Z] Using project from CLI flag: grungeard-6962a
+[debug] [2025-10-01T13:55:06.643Z] Checked if tokens are valid: true, expires at: 1759330386804
+[debug] [2025-10-01T13:55:06.643Z] Checked if tokens are valid: true, expires at: 1759330386804
+[debug] [2025-10-01T13:55:06.643Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/grungeard-6962a [none]
+[debug] [2025-10-01T13:55:06.887Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/grungeard-6962a 200
+[debug] [2025-10-01T13:55:06.887Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/grungeard-6962a {"projectId":"grungeard-6962a","projectNumber":"1038569799233","displayName":"grungeard","name":"projects/grungeard-6962a","resources":{"hostingSite":"grungeard-6962a"},"state":"ACTIVE","etag":"1_d8dfb94c-211a-4bc7-acfe-3166fd31f356"}
+[info] i  Using project grungeard-6962a (grungeard) 
+[info] 
+=== Hosting Setup
+[debug] [2025-10-01T13:55:06.923Z] Checked if tokens are valid: true, expires at: 1759330386804
+[debug] [2025-10-01T13:55:06.924Z] Checked if tokens are valid: true, expires at: 1759330386804
+[debug] [2025-10-01T13:55:06.926Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/grungeard-6962a [none]
+[debug] [2025-10-01T13:55:07.138Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/grungeard-6962a 200
+[debug] [2025-10-01T13:55:07.138Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/grungeard-6962a {"projectId":"grungeard-6962a","projectNumber":"1038569799233","displayName":"grungeard","name":"projects/grungeard-6962a","resources":{"hostingSite":"grungeard-6962a"},"state":"ACTIVE","etag":"1_d8dfb94c-211a-4bc7-acfe-3166fd31f356"}
