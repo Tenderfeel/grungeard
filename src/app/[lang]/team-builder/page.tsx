@@ -1,4 +1,5 @@
 import * as React from 'react';
+import Image from 'next/image';
 import Container from '@mui/material/Container';
 import Box from '@mui/material/Box';
 import List from '@mui/material/List';
@@ -44,6 +45,7 @@ export default async function Page({
         <List>
           {characters.map((char, index) => (
             <React.Fragment key={char.id}>
+              <Image src={`/assets/images/characters/${char.id}.png`} width={100} height={200} alt="" />
               <ListItem>
                 <ListItemText
                   primary={char.name[lang as Lang]}
