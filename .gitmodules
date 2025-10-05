@@ -1,0 +1,3 @@
+[submodule "zzz-wiki-scrap"]
+	path = zzz-wiki-scrap
+	url = https://github.com/Tenderfeel/zzz-wiki-scrap.git
