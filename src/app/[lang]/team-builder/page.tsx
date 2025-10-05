@@ -3,7 +3,8 @@ import Container from "@mui/material/Container";
 import Box from "@mui/material/Box";
 import type { Lang } from "@submodule/zzz-wiki-scrap/src/types";
 
-import CharacterList from "@/components/Character/CharacterList/indext";
+import CharacterSelector from "@/components/Character/CharacterSelector";
+import DeadlyAssaultSelector from "@/components/Filter/DeadlyAssault";
 
 export default async function Page({
   params,
@@ -17,12 +18,18 @@ export default async function Page({
       <Box
         sx={{
           display: "flex",
-          flexDirection: "column",
+          flexDirection: "row",
           justifyContent: "center",
-          alignItems: "center",
+          alignItems: "flex-start",
+          gap: 2,
         }}
       >
-        <CharacterList lang={lang as Lang} />
+        <Box>
+          <DeadlyAssaultSelector lang={lang as Lang} />
+        </Box>
+        <Box>
+          <CharacterSelector lang={lang as Lang} />
+        </Box>
       </Box>
     </Container>
   );
