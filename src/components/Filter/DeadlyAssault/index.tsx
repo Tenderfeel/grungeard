@@ -5,89 +5,56 @@
 
 import * as React from "react";
 import Box from "@mui/material/Box";
-import Stack from "@mui/material/Stack";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
 import type { Lang } from "@submodule/zzz-wiki-scrap/src/types";
-import Image from "next/image";
-import { Typography } from "@mui/material";
+import deadyAssultEnemies from "@submodule/zzz-wiki-scrap/data/deadyAssultEnemies";
+import EnemyDetailCard from "./EnemyDetailCard";
 
 type DeadlyAssaultSelectorProps = { lang: Lang };
 
 export default function DeadlyAssaultSelector({
   lang,
 }: DeadlyAssaultSelectorProps) {
-  const [age, setAge] = React.useState("");
+  const [selectedEnemyId, setSelectedEnemyId] = React.useState("");
 
   const handleChange = (event: SelectChangeEvent) => {
-    setAge(event.target.value as string);
+    setSelectedEnemyId(event.target.value as string);
   };
 
+  const selectedEnemy = React.useMemo(() => {
+    if (selectedEnemyId) {
+      return deadyAssultEnemies.find((enemy) => enemy.id === selectedEnemyId);
+    }
+    return null;
+  }, [selectedEnemyId]);
+
   return (
-    <Box sx={{ minWidth: 400 }}>
-      <Box sx={{ minWidth: 120, mt: 2 }}>
-        <FormControl size="small">
-          <InputLabel id="demo-simple-select-label">Target</InputLabel>
-          <Select
-            labelId="demo-simple-select-label"
-            id="demo-simple-select"
-            value={age}
-            label="Target"
-            onChange={handleChange}
-          >
-            <MenuItem value={10}>「冒涜者」</MenuItem>
-            <MenuItem value={20}>ミアズマ・フィーンド・名は名なれど</MenuItem>
-            <MenuItem value={30}>ミアズマの司祭</MenuItem>
-          </Select>
-        </FormControl>
-      </Box>
+    <Box sx={{ minWidth: 400, maxWidth: 600 }}>
+      <FormControl size="small" sx={{ minWidth: 120, mt: 2 }}>
+        <InputLabel id="demo-simple-select-label">Target</InputLabel>
+        <Select
+          labelId="demo-simple-select-label"
+          id="demo-simple-select"
+          value={selectedEnemyId}
+          label="Target"
+          onChange={handleChange}
+        >
+          {deadyAssultEnemies.map((deadyAssultEnemy) => {
+            return (
+              <MenuItem key={deadyAssultEnemy.id} value={deadyAssultEnemy.id}>
+                {deadyAssultEnemy.name[lang]}
+              </MenuItem>
+            );
+          })}
+        </Select>
+      </FormControl>
 
-      <Stack direction="row" gap={1} p={2}>
-        <Image
-          src="/assets/images/enemies/defiler.webp"
-          width={100}
-          height={138}
-          alt=""
-        />
-        <Stack gap={1}>
-          <Stack direction="row" gap={1} alignItems="center">
-            <Typography variant="body2" color="textSecondary">
-              弱点属性
-            </Typography>
-
-            <Stack direction="row">
-              <Image
-                src="/assets/images/stats/physical.png"
-                width={24}
-                height={24}
-                alt="物理属性"
-              />
-              <Image
-                src="/assets/images/stats/electric.png"
-                width={24}
-                height={24}
-                alt="電気属性"
-              />
-            </Stack>
-          </Stack>
-          <Stack direction="row" gap={1} alignItems="center">
-            <Typography variant="body2" color="textSecondary">
-              耐性属性
-            </Typography>
-
-            <Stack direction="row">
-              <Image
-                src="/assets/images/stats/ice.png"
-                width={24}
-                height={24}
-                alt="氷属性"
-              />
-            </Stack>
-          </Stack>
-        </Stack>
-      </Stack>
+      {selectedEnemy && (
+        <EnemyDetailCard lang={lang} enemyData={selectedEnemy} />
+      )}
     </Box>
   );
 }
