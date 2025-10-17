@@ -5,10 +5,6 @@ import Box from "@mui/material/Box";
 import ImageList from "@mui/material/ImageList";
 import ImageListItem from "@mui/material/ImageListItem";
 import Typography from "@mui/material/Typography";
-import Stack from "@mui/material/Stack";
-import Tabs from "@mui/material/Tabs";
-import Tab from "@mui/material/Tab";
-
 import type { Lang } from "@submodule/zzz-wiki-scrap/src/types";
 import bomps from "@submodule/zzz-wiki-scrap/data/bomps";
 
