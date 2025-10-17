@@ -4,11 +4,6 @@
     "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
     "frameworksBackend": {
       "region": "asia-east1"
-    },
-    "predeploy": [
-      "git submodule update --init --recursive",
-      "npm install",
-      "npm run build"
-    ]
+    }
   }
 }
