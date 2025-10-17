@@ -1,17 +1,21 @@
 "use client";
+
 import * as React from "react";
+import { useAtom } from "jotai";
 import Image from "next/image";
+
 import Box from "@mui/material/Box";
 import ImageList from "@mui/material/ImageList";
 import ImageListItem from "@mui/material/ImageListItem";
 import Typography from "@mui/material/Typography";
 import type { Lang } from "@submodule/zzz-wiki-scrap/src/types";
 import bomps from "@submodule/zzz-wiki-scrap/data/bomps";
+import { haveBompsAtom } from "@/stores";
 
 type BompListProps = { lang: Lang };
 
 export default function BompSelector({ lang }: BompListProps) {
-  const [haveBomps, setHaveBomps] = React.useState<string[]>([]);
+  const [haveBomps, setHaveBomps] = useAtom(haveBompsAtom);
 
   const handleClick = (charId: string) => {
     if (haveBomps.includes(charId)) {

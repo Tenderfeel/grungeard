@@ -1,10 +1,13 @@
 "use client";
+
 import * as React from "react";
+import { useAtom } from "jotai";
 import Image from "next/image";
 import Box from "@mui/material/Box";
 import ImageList from "@mui/material/ImageList";
 import ImageListItem from "@mui/material/ImageListItem";
 import Typography from "@mui/material/Typography";
+import { haveCharactersAtom } from "@/stores";
 
 import type { Lang } from "@submodule/zzz-wiki-scrap/src/types";
 import characters from "@submodule/zzz-wiki-scrap/data/characters";
@@ -13,7 +16,7 @@ type CharacterListProps = { lang: Lang };
 
 export default function CharacterSelector({ lang }: CharacterListProps) {
   const reversedCharacters = [...characters].reverse();
-  const [haveCharacters, setHaveCharacters] = React.useState<string[]>([]);
+  const [haveCharacters, setHaveCharacters] = useAtom(haveCharactersAtom);
 
   const handleClick = (charId: string) => {
     if (haveCharacters.includes(charId)) {

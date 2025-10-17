@@ -7,8 +7,8 @@ import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import type { Lang } from "@submodule/zzz-wiki-scrap/src/types";
 
-import CharacterSelector from "@/components/Character/CharacterSelector";
-import BompSelector from "@/components/Bomp/BompSelector";
+import CharacterSelector from "@/components/ResourceSelector/CharacterSelector";
+import BompSelector from "@/components/ResourceSelector/BompSelector";
 
 export default function ResourceSelector({ lang }: { lang: Lang }) {
   const [value, setValue] = React.useState(0);
@@ -26,8 +26,8 @@ export default function ResourceSelector({ lang }: { lang: Lang }) {
           scrollButtons="auto"
           aria-label="scrollable auto tabs example"
         >
-          <Tab label="所有キャラ" />
-          <Tab label="所有ボンプ" />
+          <Tab label="キャラ" />
+          <Tab label="ボンプ" />
         </Tabs>
       </Stack>
       {value === 0 && <CharacterSelector lang={lang as Lang} />}

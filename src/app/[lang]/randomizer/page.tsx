@@ -3,7 +3,7 @@ import Container from "@mui/material/Container";
 import Box from "@mui/material/Box";
 import type { Lang } from "@submodule/zzz-wiki-scrap/src/types";
 
-import DeadlyAssaultSelector from "@/components/Filter/DeadlyAssault";
+import TeamBoard from "./_components/TeamBoard";
 import ResourceSelector from "@/components/ResourceSelector";
 
 export default async function Page({
@@ -24,9 +24,7 @@ export default async function Page({
           gap: 2,
         }}
       >
-        <Box>
-          <DeadlyAssaultSelector lang={lang as Lang} />
-        </Box>
+        <TeamBoard lang={lang as Lang} />
 
         <ResourceSelector lang={lang as Lang} />
       </Box>
