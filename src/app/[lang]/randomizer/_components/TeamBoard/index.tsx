@@ -62,6 +62,7 @@ export default function TeamBoard({ lang }: { lang: Lang }) {
     handleSpecialtySelect,
     handleGenerateTeam,
     handleMatchTypeChange,
+    handleResetTeam,
   } = useService();
 
   return (
@@ -104,9 +105,18 @@ export default function TeamBoard({ lang }: { lang: Lang }) {
             </Select>
           </FormControl>
         </Box>
-        <Button variant="contained" onClick={handleGenerateTeam}>
-          Generate
-        </Button>
+        <Stack direction="row" gap={2}>
+          <Button variant="outlined" onClick={handleResetTeam}>
+            Reset
+          </Button>
+          <Button
+            variant="contained"
+            onClick={handleGenerateTeam}
+            sx={{ width: "70%" }}
+          >
+            Generate
+          </Button>
+        </Stack>
       </Stack>
 
       <Stack

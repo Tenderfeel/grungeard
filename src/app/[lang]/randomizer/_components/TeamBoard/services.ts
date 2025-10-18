@@ -133,18 +133,8 @@ export default function useService() {
 
   function handleGenerateTeam() {
     const teams: Team[] = [];
-    const emptyTeams: Team[] = [];
 
-    // 初期化
-    for (let i = 0; i < teamCount; i++) {
-      const team: Team = {
-        id: Date.now() + i,
-        members: [null, null, null],
-        bomp: null,
-      };
-      emptyTeams.push(team);
-    }
-    setTeams(emptyTeams);
+    handleResetTeam();
 
     for (let i = 0; i < teamCount; i++) {
       const team: Team = {
@@ -162,6 +152,24 @@ export default function useService() {
     }, 600);
   }
 
+  /**
+   * リセット
+   */
+  function handleResetTeam() {
+    const emptyTeams: Team[] = [];
+
+    // 初期化
+    for (let i = 0; i < teamCount; i++) {
+      const team: Team = {
+        id: Date.now() + i,
+        members: [null, null, null],
+        bomp: null,
+      };
+      emptyTeams.push(team);
+    }
+    setTeams(emptyTeams);
+  }
+
   return {
     selectStats,
     selectSpecialties,
@@ -174,5 +182,6 @@ export default function useService() {
     handleSpecialtySelect,
     handleGenerateTeam,
     handleMatchTypeChange,
+    handleResetTeam,
   };
 }
