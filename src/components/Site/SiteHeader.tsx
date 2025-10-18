@@ -8,7 +8,7 @@ import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import Stack from "@mui/material/Stack";
 
-import ModeSwitch from "./ModeSwitch";
+// import ModeSwitch from "./ModeSwitch";
 
 type SiteHeaderProps = {
   pageTitle?: string;
@@ -62,9 +62,9 @@ export default function SiteHeader({ pageTitle }: SiteHeaderProps) {
             spacing={1}
             sx={{ marginLeft: "auto" }}
           >
-            <Stack direction="row" alignItems="center">
+            {/* <Stack direction="row" alignItems="center">
               <ModeSwitch />
-            </Stack>
+            </Stack> */}
           </Stack>
         </Stack>
       </Toolbar>
