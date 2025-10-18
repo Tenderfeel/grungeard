@@ -6,6 +6,7 @@ import { haveCharactersAtom, haveBompsAtom } from "@/stores";
 import characters from "@submodule/zzz-wiki-scrap/data/characters";
 import bomps from "@submodule/zzz-wiki-scrap/data/bomps";
 import type { SelectChangeEvent } from "@mui/material/Select";
+import { sendGTMEvent } from "@next/third-parties/google";
 
 type Team = {
   id: number;
@@ -153,6 +154,8 @@ export default function useService() {
       };
       teams.push(team);
     }
+
+    sendGTMEvent({ event: "generateRandomTeam", value: teams });
 
     setTimeout(() => {
       setTeams(teams);
