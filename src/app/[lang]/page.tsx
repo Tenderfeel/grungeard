@@ -9,7 +9,13 @@ import BgImage from "@/assets/images/site/bg_body.jpg";
 import BgSplashImg from "@/assets/images/site/bg_splash.png";
 import LogoImg from "@/assets/images/site/logo.png";
 
-export default function Home() {
+export default async function Home({
+  params,
+}: {
+  params: Promise<{ lang: string }>;
+}) {
+  const { lang } = await params;
+
   return (
     <Box sx={{ display: "grid", overflow: "hidden", background: "#000" }}>
       <Image
@@ -74,7 +80,7 @@ export default function Home() {
           </Typography>
 
           <Link
-            href="/randomizer"
+            href={`/${lang}/randomizer`}
             color="secondary"
             component={NextLink}
             sx={{ mb: 4, display: "block" }}
