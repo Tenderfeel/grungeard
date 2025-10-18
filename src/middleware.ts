@@ -22,7 +22,7 @@ export function middleware(request: NextRequest) {
   if (
     pathname.startsWith("/api/") ||
     pathname.startsWith("/assets/") ||
-    /^\/.+\.(png|svg|jpg)$/.test(pathname)
+    /^\/.+\.(png|svg|jpg|ico)$/.test(pathname)
   ) {
     return NextResponse.next();
   }
