@@ -19,7 +19,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang="ja" suppressHydrationWarning>
       <GoogleTagManager gtmId="G-B5CQGDMH2C" />
       <body>
         <InitColorSchemeScript attribute="class" />

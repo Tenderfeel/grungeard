@@ -11,7 +11,7 @@ import LogoImg from "@/assets/images/site/logo.png";
 
 export default function Home() {
   return (
-    <Box sx={{ display: "grid", overflow: "hidden" }}>
+    <Box sx={{ display: "grid", overflow: "hidden", background: "#000" }}>
       <Image
         src={BgImage}
         alt=""
