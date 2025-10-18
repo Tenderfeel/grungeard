@@ -5,7 +5,6 @@ import Button from "@mui/material/Button";
 import Divider from "@mui/material/Divider";
 import Paper from "@mui/material/Paper";
 import Stack from "@mui/material/Stack";
-import { styled } from "@mui/material/styles";
 import AddIcon from "@mui/icons-material/Add";
 import ImageList from "@mui/material/ImageList";
 import ImageListItem from "@mui/material/ImageListItem";
@@ -13,6 +12,9 @@ import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
+import { useTheme } from "@mui/material/styles";
+import useMediaQuery from "@mui/material/useMediaQuery";
+import { TransitionGroup } from "react-transition-group";
 
 import StatsFilter from "@/components/Filter/Stats";
 import SpecialtyFilter from "@/components/Filter/Specialty";
@@ -21,28 +23,38 @@ import BompListItem from "@/components/Character/BompListItem";
 import type { Lang } from "@submodule/zzz-wiki-scrap/src/types";
 
 import useService from "./services";
+import { useEffect, useRef, useState } from "react";
 
-const TeamBox = styled(Paper)(({ theme }) => ({
-  width: 100,
-  height: 167,
-  padding: 0,
-  ...theme.typography.body2,
-  display: "flex",
-  justifyContent: "center",
-  alignItems: "center",
-}));
+import TeamBox from "@/components/Character/TeamBox";
 
-const BompBox = styled(Paper)(({ theme }) => ({
-  width: 100,
-  height: 167,
-  padding: 0,
-  ...theme.typography.body2,
-  display: "flex",
-  justifyContent: "center",
-  alignItems: "center",
-}));
+// メンバー2人とボンプを並べた時の横幅
+const CONTAINER_BASE_WIDTH = 422;
 
 export default function TeamBoard({ lang }: { lang: Lang }) {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const theme = useTheme();
+  const isBreakpointsUpMd = useMediaQuery(theme.breakpoints.up("md"));
+  const isBreakpointsDownSm = useMediaQuery(theme.breakpoints.down("sm"));
+  const [teamScaleTransform, setTeamScaleTransform] = useState("");
+
+  useEffect(() => {
+    // 540px 以下
+    if (isBreakpointsDownSm) {
+      const rect = document.body.getBoundingClientRect();
+      if (!rect) return;
+
+      if (rect.width < CONTAINER_BASE_WIDTH) {
+        setTeamScaleTransform(
+          `scale(${
+            1 - (CONTAINER_BASE_WIDTH - rect.width + 10) / CONTAINER_BASE_WIDTH
+          })`
+        );
+      } else {
+        setTeamScaleTransform("scale(1)");
+      }
+    }
+  }, [isBreakpointsDownSm]);
+
   const {
     selectStats,
     selectSpecialties,
@@ -56,8 +68,23 @@ export default function TeamBoard({ lang }: { lang: Lang }) {
   } = useService();
 
   return (
-    <Stack gap={4} mt={2} sx={{ minWidth: 422 }}>
-      <Stack gap={1}>
+    <Stack
+      gap={4}
+      mt={2}
+      id="TeamBoard"
+      ref={containerRef}
+      alignItems="center"
+      sx={{
+        minWidth: isBreakpointsUpMd ? CONTAINER_BASE_WIDTH : "inherit",
+        maxWidth: "100%",
+      }}
+    >
+      <Stack
+        gap={1}
+        sx={{
+          maxWidth: isBreakpointsDownSm ? "calc(100% - 20px)" : "100%",
+        }}
+      >
         {/* 属性 */}
         <StatsFilter values={selectStats} onSelect={handleStatsSelect} />
         {/* 特性 */}
@@ -85,34 +112,39 @@ export default function TeamBoard({ lang }: { lang: Lang }) {
         </Button>
       </Stack>
 
-      <Stack divider={<Divider flexItem />}>
+      <Stack
+        divider={<Divider flexItem />}
+        id="TeamList"
+        direction="row"
+        sx={{
+          transform: teamScaleTransform,
+        }}
+      >
         {teams.map((team, ti) => {
           return (
-            <Stack direction="row" alignItems="flex-end" gap={1} key={ti}>
-              <ImageList cols={3} gap={1} sx={{ m: 0 }}>
-                {team.members.map((member, mi) => {
-                  if (member === null) {
-                    return (
-                      <ImageListItem key={mi}>
-                        <TeamBox>
-                          <AddIcon fontSize="large" color="disabled" />
-                        </TeamBox>
-                      </ImageListItem>
-                    );
-                  } else {
-                    return (
-                      <CharacterListItem key={mi} char={member} lang={lang} />
-                    );
-                  }
-                })}
-              </ImageList>
+            <ImageList
+              className="TeamItem"
+              key={ti}
+              cols={4}
+              gap={1}
+              sx={{ m: 0 }}
+            >
+              {team.members.map((member, mi) => {
+                return <CharacterListItem key={mi} char={member} lang={lang} />;
+              })}
               {!team.bomp && (
-                <BompBox>
-                  <AddIcon fontSize="large" color="disabled" />
-                </BompBox>
+                <ImageListItem key={team.members.length + 1}>
+                  <TeamBox />
+                </ImageListItem>
               )}
-              {team.bomp && <BompListItem bomp={team.bomp} lang={lang} />}
-            </Stack>
+              {team.bomp && (
+                <BompListItem
+                  id={team.members.length + 1}
+                  bomp={team.bomp}
+                  lang={lang}
+                />
+              )}
+            </ImageList>
           );
         })}
       </Stack>

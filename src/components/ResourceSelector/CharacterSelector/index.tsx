@@ -8,17 +8,20 @@ import ImageList from "@mui/material/ImageList";
 import ImageListItem from "@mui/material/ImageListItem";
 import Typography from "@mui/material/Typography";
 import { haveCharactersAtom } from "@/stores";
+import { useTheme } from "@mui/material/styles";
+import useMediaQuery from "@mui/material/useMediaQuery";
 
 import type { Lang } from "@submodule/zzz-wiki-scrap/src/types";
 import characters from "@submodule/zzz-wiki-scrap/data/characters";
-
-import CharacterListItem from "@/components/Character/CharacterListItem";
 
 type CharacterListProps = { lang: Lang };
 
 export default function CharacterSelector({ lang }: CharacterListProps) {
   const reversedCharacters = [...characters].reverse();
   const [haveCharacters, setHaveCharacters] = useAtom(haveCharactersAtom);
+
+  const theme = useTheme();
+  const isBreakpointsUpLg = useMediaQuery(theme.breakpoints.up("lg"));
 
   const handleClick = (charId: string) => {
     if (haveCharacters.includes(charId)) {
@@ -35,7 +38,7 @@ export default function CharacterSelector({ lang }: CharacterListProps) {
         overflowY: "auto",
       }}
     >
-      <ImageList cols={6} gap={1} rowHeight={167}>
+      <ImageList cols={isBreakpointsUpLg ? 6 : 3} gap={1} rowHeight={167}>
         {reversedCharacters.map((char) => {
           const haveChar = haveCharacters.includes(char.id);
           return (

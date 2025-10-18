@@ -75,6 +75,22 @@ export default function BompSelector({ lang }: BompListProps) {
                 />
 
                 <Image
+                  src={`/assets/images/rank/${char.rarity}.png`}
+                  width={24}
+                  height={24}
+                  priority={true}
+                  alt=""
+                  style={{
+                    transition: "all 0.3s ease",
+                    objectFit: "fill",
+                    position: "absolute",
+                    right: "24px",
+                    bottom: "10px",
+                    zIndex: 1,
+                    background: "black",
+                  }}
+                />
+                <Image
                   src={`/assets/images/stats/${char.stats}.png`}
                   width={24}
                   height={24}
@@ -84,7 +100,7 @@ export default function BompSelector({ lang }: BompListProps) {
                     transition: "all 0.3s ease",
                     objectFit: "fill",
                     position: "absolute",
-                    right: "10px",
+                    right: "0",
                     bottom: "10px",
                     zIndex: 1,
                     background: "black",
