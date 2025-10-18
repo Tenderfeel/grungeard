@@ -11,11 +11,16 @@ import Typography from "@mui/material/Typography";
 import type { Lang } from "@submodule/zzz-wiki-scrap/src/types";
 import bomps from "@submodule/zzz-wiki-scrap/data/bomps";
 import { haveBompsAtom } from "@/stores";
+import { useTheme } from "@mui/material/styles";
+import useMediaQuery from "@mui/material/useMediaQuery";
 
 type BompListProps = { lang: Lang };
 
 export default function BompSelector({ lang }: BompListProps) {
   const [haveBomps, setHaveBomps] = useAtom(haveBompsAtom);
+
+  const theme = useTheme();
+  const isBreakpointsUpLg = useMediaQuery(theme.breakpoints.up("lg"));
 
   const handleClick = (charId: string) => {
     if (haveBomps.includes(charId)) {
@@ -32,7 +37,7 @@ export default function BompSelector({ lang }: BompListProps) {
         overflowY: "auto",
       }}
     >
-      <ImageList cols={3} gap={1}>
+      <ImageList cols={isBreakpointsUpLg ? 6 : 3} gap={1} rowHeight={167}>
         {bomps.map((char) => {
           const haveChar = haveBomps.includes(char.id);
           return (
