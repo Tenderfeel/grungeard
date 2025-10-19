@@ -109,11 +109,7 @@ export default function TeamBoard({ lang }: { lang: Lang }) {
           <Button variant="outlined" onClick={handleResetTeam}>
             Reset
           </Button>
-          <Button
-            variant="contained"
-            onClick={handleGenerateTeam}
-            sx={{ width: "70%" }}
-          >
+          <Button variant="contained" type="submit" sx={{ width: "70%" }}>
             Generate
           </Button>
         </Stack>

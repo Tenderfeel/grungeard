@@ -5,12 +5,12 @@ import { AppRouterCacheProvider } from "@mui/material-nextjs/v15-appRouter";
 import { ThemeProvider } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
 import InitColorSchemeScript from "@mui/material/InitColorSchemeScript";
-import { GoogleTagManager } from "@next/third-parties/google";
 import theme from "@/theme";
+import GTag from "@/components/Site/GTag";
 
 export const metadata: Metadata = {
   title: "Grungeard.net",
-  description: "ゼンレスゾーンゼロに特化したWebアプリケーション",
+  description: "ゲーム用Webアプリケーションを公開しています",
 };
 
 export default function RootLayout({
@@ -20,7 +20,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ja" suppressHydrationWarning>
-      <GoogleTagManager gtmId="G-B5CQGDMH2C" />
+      <GTag />
       <body>
         <InitColorSchemeScript attribute="class" />
         <AppRouterCacheProvider options={{ enableCssLayer: true }}>

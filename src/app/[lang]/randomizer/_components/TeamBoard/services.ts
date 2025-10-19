@@ -145,7 +145,12 @@ export default function useService() {
       teams.push(team);
     }
 
-    sendGTMEvent({ event: "generateRandomTeam", value: teams });
+    sendGTMEvent({
+      event: "generateRandomTeam",
+      selectStats,
+      selectSpecialties,
+      matchType,
+    });
 
     setTimeout(() => {
       setTeams(teams);
