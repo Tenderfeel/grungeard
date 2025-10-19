@@ -38,12 +38,18 @@ export default function CharacterSelector({ lang }: CharacterListProps) {
         overflowY: "auto",
       }}
     >
-      <ImageList cols={isBreakpointsUpLg ? 6 : 3} gap={1} rowHeight={167}>
+      <ImageList
+        id="CharacterSelector"
+        cols={isBreakpointsUpLg ? 6 : 3}
+        gap={1}
+        rowHeight={167}
+      >
         {reversedCharacters.map((char) => {
           const haveChar = haveCharacters.includes(char.id);
           return (
             <ImageListItem
               key={char.id}
+              className="CharacterSelector__Item"
               sx={{
                 position: "relative",
                 cursor: "pointer",

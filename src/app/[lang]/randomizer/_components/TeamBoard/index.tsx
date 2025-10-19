@@ -60,9 +60,9 @@ export default function TeamBoard({ lang }: { lang: Lang }) {
 
     handleStatsSelect,
     handleSpecialtySelect,
-    handleGenerateTeam,
     handleMatchTypeChange,
     handleResetTeam,
+    handleGenerateTeam,
   } = useService();
 
   return (
@@ -92,10 +92,10 @@ export default function TeamBoard({ lang }: { lang: Lang }) {
         />
         <Box sx={{ minWidth: 120 }}>
           <FormControl fullWidth size="small">
-            <InputLabel id="match-select-label">Match type</InputLabel>
+            <InputLabel id="MatchSelectLabel">Match type</InputLabel>
             <Select
-              labelId="match-select-label"
-              id="match-select"
+              labelId="MatchSelectLabel"
+              id="MatchSelect"
               value={matchType}
               label="Match type"
               onChange={handleMatchTypeChange}
@@ -106,10 +106,20 @@ export default function TeamBoard({ lang }: { lang: Lang }) {
           </FormControl>
         </Box>
         <Stack direction="row" gap={2}>
-          <Button variant="outlined" onClick={handleResetTeam}>
+          <Button
+            variant="outlined"
+            id="TeamResetBtn"
+            onClick={handleResetTeam}
+          >
             Reset
           </Button>
-          <Button variant="contained" type="submit" sx={{ width: "70%" }}>
+          <Button
+            variant="contained"
+            onClick={handleGenerateTeam}
+            type="submit"
+            id="TeamGenerateBtn"
+            sx={{ width: "70%" }}
+          >
             Generate
           </Button>
         </Stack>

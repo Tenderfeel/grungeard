@@ -31,7 +31,8 @@ export default function SpecialtyFilter({
     <ToggleButtonGroup
       value={values}
       onChange={handleFormat}
-      aria-label="text formatting"
+      id="SpecialityFilter"
+      aria-label="Speciality Filter"
     >
       {specialties.map((specialty) => {
         return (

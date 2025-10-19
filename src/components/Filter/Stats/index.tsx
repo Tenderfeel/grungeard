@@ -31,7 +31,8 @@ export default function StatsFilter({
     <ToggleButtonGroup
       value={values}
       onChange={handleFormat}
-      aria-label="text formatting"
+      id="StatsFilter"
+      aria-label="Stats Filter"
     >
       {statsList.map((statsData) => {
         return (

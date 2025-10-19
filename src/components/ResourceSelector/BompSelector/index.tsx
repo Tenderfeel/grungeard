@@ -37,12 +37,18 @@ export default function BompSelector({ lang }: BompListProps) {
         overflowY: "auto",
       }}
     >
-      <ImageList cols={isBreakpointsUpLg ? 6 : 3} gap={1} rowHeight={167}>
+      <ImageList
+        id="BompSelector"
+        cols={isBreakpointsUpLg ? 6 : 3}
+        gap={1}
+        rowHeight={167}
+      >
         {bomps.map((char) => {
           const haveChar = haveBomps.includes(char.id);
           return (
             <ImageListItem
               key={char.id}
+              className="BompSelector__Item"
               sx={{
                 position: "relative",
                 cursor: "pointer",
