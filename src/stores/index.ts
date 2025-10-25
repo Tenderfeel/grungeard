@@ -15,3 +15,11 @@ export const haveBompsAtom = atomWithStorage<string[]>(
   "grungeard.zzz.haveBomps",
   []
 );
+
+/**
+ * 所持音動機
+ */
+export const haveWeaponsAtom = atomWithStorage<number[]>(
+  "grungeard.zzz.haveWeapons",
+  []
+);

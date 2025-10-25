@@ -9,8 +9,15 @@ import type { Lang } from "@submodule/zzz-wiki-scrap/src/types";
 
 import CharacterSelector from "@/components/ResourceSelector/CharacterSelector";
 import BompSelector from "@/components/ResourceSelector/BompSelector";
+import WeaponSelector from "./WeaponSelector";
 
-export default function ResourceSelector({ lang }: { lang: Lang }) {
+export default function ResourceSelector({
+  lang,
+  showWeapon,
+}: {
+  lang: Lang;
+  showWeapon?: boolean;
+}) {
   const [value, setValue] = React.useState(0);
   const handleTabChange = (event: React.SyntheticEvent, newValue: number) => {
     setValue(newValue);
@@ -28,10 +35,12 @@ export default function ResourceSelector({ lang }: { lang: Lang }) {
         >
           <Tab label="キャラ" />
           <Tab label="ボンプ" />
+          {showWeapon && <Tab label="音動機" />}
         </Tabs>
       </Stack>
       {value === 0 && <CharacterSelector lang={lang as Lang} />}
       {value === 1 && <BompSelector lang={lang as Lang} />}
+      {value === 2 && showWeapon && <WeaponSelector lang={lang as Lang} />}
     </Box>
   );
 }

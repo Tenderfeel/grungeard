@@ -28,7 +28,7 @@ export default async function Page({
           <DeadlyAssaultSelector lang={lang as Lang} />
         </Box>
 
-        <ResourceSelector lang={lang as Lang} />
+        <ResourceSelector lang={lang as Lang} showWeapon={true} />
       </Box>
     </Container>
   );
