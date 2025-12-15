@@ -4,219 +4,148 @@ inclusion: always
 
 # Technical Stack & Development Guidelines
 
-## Framework Stack (NEVER DEVIATE)
+## Core Stack (STRICT REQUIREMENTS)
 
-### Core Dependencies
-
-- **Next.js 16.0.10** with App Router (NEVER use Pages Router)
+- **Next.js 16.0.10** with App Router only (never Pages Router)
 - **React 19.2.3** with TypeScript 5.9.3 (functional components only)
-- **Material-UI v7.3.6** (primary UI library)
-- **Turbopack** for development builds
+- **Material-UI v7.3.6** for all UI components
+- **Development**: Always use `npm run dev` (Turbopack enabled)
 
-### Development Commands
+## TypeScript Rules (ENFORCE STRICTLY)
 
-```bash
-npm run dev    # Development with Turbopack (ALWAYS use this)
-npm run build  # Production build
-npm run lint   # ESLint + TypeScript checks
-```
-
-## TypeScript Configuration (STRICT MODE)
-
-### Type Safety Rules
+### Mandatory Patterns
 
 ```typescript
-// NEVER use 'any' - use proper types
-❌ const data: any = fetchData();
-✅ const data: Character[] = fetchCharacters();
+// Never use 'any' - always type properly
+interface ComponentProps {
+  data: Character[];
+  onSelect: (character: Character) => void;
+  locale: "ja" | "en";
+}
 
-// Always define component props interfaces
-❌ function Component(props) { ... }
-✅ interface ComponentProps { ... }
-   function Component({ prop1, prop2 }: ComponentProps) { ... }
+// Always use optional chaining and nullish coalescing
+const name = character?.name?.[locale] ?? "Unknown";
 
-// Use strict null checks
-❌ character.name.ja  // Could be undefined
-✅ character?.name?.ja ?? 'Unknown'
+// Team compositions must be exact tuples
+type Team = readonly [Character, Character, Character];
 ```
 
-### Required Type Patterns
+### Component Structure
 
 ```typescript
-// Props interface naming
+// Required pattern for all components
 interface ComponentNameProps {
   required: string;
   optional?: boolean;
 }
 
-// Event handler typing
-interface EventHandlers {
-  onSelect: (character: Character) => void;
-  onTeamChange: (team: [Character, Character, Character]) => void;
+export function ComponentName({
+  required,
+  optional = false,
+}: ComponentNameProps) {
+  // Implementation
 }
-
-// Utility function typing
-function calculateScore(
-  team: readonly [Character, Character, Character]
-): number;
 ```
 
-## Material-UI Styling (MANDATORY APPROACH)
+## Material-UI Styling (ONLY ALLOWED METHODS)
 
-### Styling Methods (ONLY THESE)
+### Approved Styling
 
 ```typescript
-// 1. sx prop (preferred for simple styles)
-<Box sx={{
-  display: 'flex',
-  gap: 2,
-  p: 3,
-  bgcolor: 'background.paper'
-}}>
+// 1. sx prop (preferred)
+<Box sx={{ display: 'flex', gap: 2, p: 3 }}>
 
-// 2. styled() components (for reusable styles)
+// 2. styled() for reusable components
 const StyledCard = styled(Card)(({ theme }) => ({
   padding: theme.spacing(2),
-  borderRadius: theme.shape.borderRadius,
 }));
 
-// 3. Theme-aware conditional styling
-<Typography
-  sx={{
-    color: theme => theme.palette.mode === 'dark' ? 'primary.light' : 'primary.dark'
-  }}
->
+// 3. Theme-aware conditional styles
+<Typography sx={{ color: theme => theme.palette.primary.main }}>
 ```
 
-### Forbidden Styling Approaches
+### Forbidden Approaches
 
-```typescript
-❌ import './styles.css'           // No external CSS
-❌ style={{ color: 'red' }}       // No inline styles
-❌ className="custom-class"       // No custom CSS classes
-```
+- ❌ External CSS files (`import './styles.css'`)
+- ❌ Inline styles (`style={{ color: 'red' }}`)
+- ❌ Custom CSS classes (`className="custom"`)
 
-### Typography Requirements
-
-```typescript
-// Always use MUI Typography with M PLUS 1p font
-<Typography variant="h4" component="h1">
-  {content[locale]}
-</Typography>
-
-// Font variants available: h1-h6, body1, body2, caption, button
-```
-
-## Image Handling (CRITICAL PERFORMANCE)
+## Image Handling (PERFORMANCE CRITICAL)
 
 ### Next.js Image Component (MANDATORY)
 
 ```typescript
-import Image from 'next/image';
+import Image from "next/image";
 
-// Character portraits
+// Always specify dimensions and optimization
 <Image
   src={`/assets/images/characters/${character.id}.png`}
   alt={character.name[locale]}
   width={120}
   height={120}
   priority={isAboveFold}
-/>
-
-// Weapon icons
-<Image
-  src={`/assets/images/weapons/${weapon.id}.png`}
-  alt={weapon.name[locale]}
-  width={64}
-  height={64}
-  loading="lazy"
-/>
+  loading={isAboveFold ? undefined : "lazy"}
+/>;
 ```
 
-### Image Optimization Rules
+### Asset Path Conventions
 
-- Always specify `width` and `height`
-- Use `priority={true}` for above-fold images
-- Use `loading="lazy"` for below-fold images
-- Provide meaningful `alt` text in current locale
+- Characters: `/assets/images/characters/${id}.png`
+- Weapons: `/assets/images/weapons/${id}.png`
+- Bomps: `/assets/images/bomps/${id}.png`
+- Specialties: `/assets/images/specialties/${type}.png`
 
-## Internationalization Implementation
+## Internationalization (STRICT PATTERN)
 
-### Route Structure (ENFORCE)
+### Route Structure
 
-```typescript
-// All pages under [lang] dynamic segment
-app / [lang] / page.tsx; // Home page
-app / [lang] / team - builder / page.tsx; // Team builder
-app / [lang] / randomizer / page.tsx; // Randomizer
+All pages must be under `app/[lang]/` with locale parameter:
 
-// Middleware for locale detection
-export function middleware(request: NextRequest) {
-  // Detect locale from Accept-Language header
-  // Redirect to appropriate /ja/ or /en/ route
-}
-```
+- `/ja/` or `/en/` for home
+- `/ja/team-builder` or `/en/team-builder`
+- `/ja/randomizer` or `/en/randomizer`
 
-### Content Localization Pattern
+### Content Pattern
 
 ```typescript
-// Define all text as bilingual objects
+// All user-facing text as bilingual objects
 const content = {
-  pageTitle: { ja: "チーム編成ツール", en: "Team Builder Tool" },
-  selectCharacter: { ja: "キャラクターを選択", en: "Select Character" },
-  teamScore: { ja: "チームスコア", en: "Team Score" },
+  title: { ja: "チーム編成", en: "Team Builder" },
+  button: { ja: "選択", en: "Select" },
 };
 
-// Component usage
+// Usage in components
 function Header({ locale }: { locale: "ja" | "en" }) {
-  return <Typography variant="h1">{content.pageTitle[locale]}</Typography>;
+  return <Typography>{content.title[locale]}</Typography>;
 }
 ```
 
 ## Performance Requirements
 
-### Bundle Optimization
+### Loading States
+
+Always provide loading UI for async operations:
 
 ```typescript
-// Code splitting by route (automatic with App Router)
-// Dynamic imports for heavy components
-const HeavyComponent = dynamic(() => import("./HeavyComponent"), {
-  loading: () => <CircularProgress />,
-});
-
-// Lazy load character data
-const { characters } = useMemo(() => import("@/data/characters"), []);
-```
-
-### Loading States (MANDATORY)
-
-```typescript
-// Always provide loading states
-function CharacterList() {
+function DataComponent() {
   const [loading, setLoading] = useState(true);
 
-  if (loading) {
-    return <CircularProgress />;
-  }
-
-  return <Grid>{/* character items */}</Grid>;
+  if (loading) return <CircularProgress />;
+  return <ActualContent />;
 }
 ```
 
-## Error Handling Patterns
+### Code Splitting
 
-### Error Boundaries (REQUIRED)
+Use dynamic imports for heavy components:
 
 ```typescript
-// Wrap feature components in error boundaries
-function TeamBuilderPage() {
-  return (
-    <ErrorBoundary fallback={<ErrorFallback />}>
-      <TeamBuilder />
-    </ErrorBoundary>
-  );
-}
+const HeavyComponent = dynamic(() => import("./Heavy"), {
+  loading: () => <CircularProgress />,
+});
 ```
+
+## Error Handling (MANDATORY)
 
 ### Graceful Degradation
 
@@ -235,23 +164,31 @@ function CharacterCard({ character }: { character: Character }) {
 }
 ```
 
-## SEO Implementation (MANDATORY)
+### Error Boundaries
 
-### Metadata API Usage
+Wrap feature components in error boundaries:
 
 ```typescript
-// In page.tsx files
+<ErrorBoundary fallback={<ErrorFallback />}>
+  <FeatureComponent />
+</ErrorBoundary>
+```
+
+## SEO Implementation
+
+### Metadata Generation
+
+```typescript
 export async function generateMetadata({
   params,
 }: {
   params: { lang: string };
-}): Promise<Metadata> {
+}) {
   return {
     title: content.pageTitle[params.lang as "ja" | "en"],
     description: content.pageDescription[params.lang as "ja" | "en"],
     openGraph: {
       title: content.pageTitle[params.lang as "ja" | "en"],
-      description: content.pageDescription[params.lang as "ja" | "en"],
       locale: params.lang,
     },
   };
