@@ -4,33 +4,62 @@ inclusion: always
 
 # Product Requirements & Business Logic
 
-## Application Purpose
+## Core Business Rules (NEVER VIOLATE)
 
-**Grungerad.net** - Zenless Zone Zero team optimization and character management tools for game players.
+### Team Composition Constraints
 
-## Core Features (IMPLEMENT EXACTLY)
+- **Exactly 3 characters per team** - ZZZ game rule, no exceptions
+- Teams must be typed as `[Character, Character, Character]` tuple
+- Validate team size before any operations (save, score, display)
+
+### Data Sources (CRITICAL PATHS)
+
+- **Primary data**: `submodule/zzz-wiki-scrap/data/` (characters.ts, bomps.ts, weapons.ts)
+- **Images**: `public/assets/images/{characters|bomps|weapons|specialties|stats}/`
+- **Never modify submodule data** - treat as read-only external source
+
+### Internationalization Requirements
+
+- **All user text**: `{ ja: "日本語", en: "English" }` object pattern
+- **Default locale**: Japanese (`ja`), fallback to English (`en`)
+- **Route structure**: `/[lang]/page-name` for all pages
+- **Consistency**: Every Japanese string must have English equivalent
+
+## Feature Implementation Rules
 
 ### Team Builder (`/[lang]/team-builder`)
 
-- **Purpose**: Algorithm-based team composition optimization
-- **Max team size**: 3 characters (ZZZ game constraint)
-- **Scoring system**: Character synergies, roles, elemental advantages
-- **Persistence**: Local storage for user's character collection
-- **UI**: Visual team display with character portraits and effectiveness scores
+```typescript
+// Required interfaces
+interface TeamBuilderState {
+  selectedCharacters: Character[];
+  availableCharacters: Character[];
+  currentTeam: [Character, Character, Character] | null;
+  teamScore: number;
+}
+
+// Scoring algorithm priorities
+1. Specialty diversity (attack/defense/support/stun/anomaly/rupture)
+2. Elemental synergy (electric/fire/ice/ether/physical/auricInk)
+3. Faction bonuses
+4. Weapon compatibility
+5. Bomp associations
+```
 
 ### Character Randomizer (`/[lang]/randomizer`)
 
-- **Purpose**: Random team generation with filtering
-- **Filters**: Specialty (Attack/Defense/Support/etc.), Element (Electric/Fire/Ice/etc.)
-- **Constraints**: Balanced team composition, role diversity
-- **UI**: Filter interface + randomized team display
+- Generate random teams with filter constraints
+- Ensure balanced composition (avoid 3 identical specialties)
+- Filters: specialty, element, rarity (A/S)
+- Re-randomize button with animation feedback
 
-## Game Data Structure (MANDATORY)
+## Data Architecture Patterns
 
-### Character Entities
+### Character Data Structure
 
 ```typescript
 interface Character {
+  id: string;
   name: { ja: string; en: string };
   specialty: "attack" | "defense" | "support" | "stun" | "anomaly" | "rupture";
   element: "electric" | "fire" | "ice" | "ether" | "physical" | "auricInk";
@@ -38,58 +67,62 @@ interface Character {
   faction: string;
   weapons: WeaponType[];
   bomps: BompId[];
+  imageUrl: string; // Path to character portrait
 }
 ```
 
-### Team Composition Rules
+### State Management Rules
 
-- **Team size**: Exactly 3 characters
-- **Role balance**: Recommend diverse specialties
-- **Elemental synergy**: Calculate advantages/disadvantages
-- **Weapon compatibility**: Factor into scoring algorithms
-
-## Data Sources (CRITICAL)
-
-- **Primary source**: `submodule/zzz-wiki-scrap/data/`
-- **Character data**: `characters.ts`, `bomps.ts`, `weapons.ts`
-- **Images**: `public/assets/images/characters/`, `/bomps/`, `/weapons/`
-- **Multilingual**: All content has Japanese (primary) and English versions
+- **localStorage**: User character collection, team saves, preferences
+- **sessionStorage**: Current filters, temporary team compositions
+- **React state**: UI interactions, loading states
+- **No external APIs**: All data is static/bundled
 
 ## User Experience Requirements
 
-### Performance
+### Performance Standards
 
-- Mobile-first responsive design
-- Optimized images with Next.js Image component
-- Fast loading times, efficient data fetching
-- Proper accessibility (ARIA labels, keyboard navigation)
+- Use Next.js `Image` component for all character/weapon/bomp images
+- Implement lazy loading for character grids
+- Optimize bundle size - code split by route
+- Target <3s initial page load
 
-### Internationalization
+### Accessibility Standards
 
-- Seamless language switching between Japanese/English
-- Locale-aware formatting and content
-- Default to Japanese locale
+- ARIA labels for all interactive elements
+- Keyboard navigation for character selection
+- Screen reader support for team composition
+- High contrast mode compatibility
 
-## Business Logic Constraints
+### Error Handling Patterns
 
-### Scoring Algorithm Factors
+```typescript
+// Graceful degradation examples
+- Missing character image → show placeholder
+- Incomplete character data → hide affected features
+- Invalid team composition → show validation message
+- localStorage unavailable → use session state
+```
 
-1. Character synergies and counter-synergies
-2. Elemental advantages in team composition
-3. Specialty role balance (DPS/Support/Defense weighting)
-4. Weapon type compatibility
-5. Bomp (pet) associations and bonuses
+## Implementation Constraints
 
-### Data Management
+### Mobile-First Design
 
-- Maintain consistency between Japanese/English versions
-- Use proper TypeScript interfaces for all game entities
-- Implement structured data for SEO
-- Cache static game data appropriately
+- Touch-friendly character selection (min 44px targets)
+- Responsive team layout (stack on mobile, grid on desktop)
+- Swipe gestures for character browsing
+- Optimized for portrait orientation
 
-## Technical Implementation Notes
+### SEO Requirements
 
-- **Hosting**: Firebase Hosting (Asia-East1 region)
-- **State**: Local storage for user preferences and character inventory
-- **Error handling**: Graceful degradation for missing data
-- **SEO**: Proper meta tags and structured data for game content
+- Structured data for character/weapon entities
+- Meta descriptions for team builder pages
+- Open Graph tags for social sharing
+- Sitemap generation for all routes
+
+### Data Validation Rules
+
+- Validate team size before scoring/saving
+- Check character availability before team creation
+- Ensure all required character properties exist
+- Fallback to default values for missing optional data
