@@ -1,0 +1,40 @@
+{
+  "backupDate": "2024-12-15",
+  "backupPurpose": "React/Next.js update preparation",
+  "gitBranch": "react-nextjs-update",
+  "currentVersions": {
+    "dependencies": {
+      "@emotion/cache": "^11.14.0",
+      "@emotion/react": "^11.14.0",
+      "@emotion/styled": "^11.14.1",
+      "@formatjs/intl-localematcher": "^0.6.1",
+      "@mui/icons-material": "^7.3.2",
+      "@mui/material": "^7.3.2",
+      "@mui/material-nextjs": "^7.3.2",
+      "@next/third-parties": "^15.5.6",
+      "jotai": "^2.15.0",
+      "negotiator": "^1.0.0",
+      "next": "15.5.4",
+      "react": "19.1.0",
+      "react-dom": "19.1.0"
+    },
+    "devDependencies": {
+      "@eslint/eslintrc": "^3",
+      "@types/negotiator": "^0.6.4",
+      "@types/node": "^20",
+      "@types/react": "^19",
+      "@types/react-dom": "^19",
+      "eslint": "^9",
+      "eslint-config-next": "15.5.4",
+      "typescript": "^5"
+    }
+  },
+  "rollbackInstructions": [
+    "1. Switch to main branch: git checkout main",
+    "2. Delete update branch: git branch -D react-nextjs-update",
+    "3. Restore package.json from this backup",
+    "4. Restore package-lock.json from package-lock-backup.json",
+    "5. Run: npm install",
+    "6. Verify application works: npm run dev"
+  ]
+}
