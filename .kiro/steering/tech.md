@@ -1,51 +1,56 @@
-# 技術スタック
+---
+inclusion: always
+---
 
-## コアフレームワーク
+# Technical Stack & Development Guidelines
 
-- **Next.js 15.5.4** App Routerアーキテクチャ
-- **React 19.1.0** TypeScript 5対応
-- **Turbopack** 高速開発・ビルド
+## Framework Stack (MANDATORY)
 
-## UI・スタイリング
+- **Next.js 15.5.4** with App Router - Never use Pages Router
+- **React 19.1.0** with TypeScript 5 - Functional components only, strict typing
+- **Material-UI v7** - Use MUI components, avoid custom CSS
+- **Turbopack** - Use `npm run dev` for development
 
-- **Material-UI (MUI) v7** emotionベーススタイリング
-- **CSS-in-JS** emotion/styledを使用
-- **ダーク/ライトモード** MUIカラースキームシステム対応
-- **M PLUS 1p** Googleフォントをタイポグラフィに使用
+## Code Style Rules (ENFORCE)
 
-## 国際化対応
+### TypeScript
 
-- **@formatjs/intl-localematcher** ロケール検出
-- **negotiator** 言語設定解析
-- サポートロケール: `en`（英語）、`ja`（日本語）
-- デフォルトロケール: 日本語（`ja`）
+- Strict mode enabled - Never use `any` type
+- Use proper interfaces for all props: `ComponentNameProps`
+- Path aliases: `@/*` maps to `./src/*`
 
-## 開発ツール
+### Styling
 
-- **ESLint** Next.js設定
-- **TypeScript** strictモード有効
-- パスエイリアス設定（`@/*` → `./src/*`）
+- MUI `sx` prop or `styled()` components only
+- No external CSS files or inline styles
+- Theme-aware components using MUI color scheme
+- Typography via MUI Typography component with M PLUS 1p font
 
-## デプロイメント
+### File Naming
 
-- **Firebase Hosting** フレームワークバックエンド
-- **Asia-East1** リージョン設定
+- Components: PascalCase (`CharacterList.tsx`)
+- Utilities/data: camelCase (`characters.ts`)
+- Routes: kebab-case (`team-builder/`)
 
-## 共通コマンド
+## Internationalization (CRITICAL)
+
+- All routes MUST use `[lang]` dynamic segments
+- Support `ja` (default) and `en` locales
+- All text content requires both languages: `{ ja: "日本語", en: "English" }`
+- Use `@formatjs/intl-localematcher` and `negotiator` for detection
+
+## Development Commands
 
 ```bash
-# 開発
-npm run dev          # Turbopack開発サーバー起動
-npm run build        # Turbopackプロダクションビルド
-npm run start        # プロダクションサーバー起動
-npm run lint         # ESLint実行
-
-# 開発サーバーは http://localhost:3000 で起動
+npm run dev    # Development with Turbopack
+npm run build  # Production build
+npm run lint   # Code quality check
 ```
 
-## ビルド設定
+## Mandatory Patterns
 
-- **Turbopack** 開発・ビルド両方で有効
-- **ES2017** ターゲット（幅広い互換性）
-- **インクリメンタルコンパイル** 有効
-- **TypeScript strict** 設定
+- Functional components with TypeScript interfaces
+- Next.js Image component for all images
+- MUI theming for consistent styling
+- Proper error boundaries and loading states
+- SEO implementation with Next.js metadata API
