@@ -79,14 +79,19 @@ export default async function Home({
             <Image src={LogoImg} alt="Grungerad.net" priority={true} />
           </Typography>
 
-          <Link
+          <NextLink
             href={`/${lang}/randomizer`}
-            color="secondary"
-            component={NextLink}
-            sx={{ mb: 4, display: "block" }}
+            style={{
+              marginBottom: "2rem",
+              display: "block",
+              color: "inherit",
+              textDecoration: "none",
+            }}
           >
-            ZZZ Team Randomizer
-          </Link>
+            <Typography color="secondary" component="span">
+              ZZZ Team Randomizer
+            </Typography>
+          </NextLink>
         </Box>
       </Box>
     </Box>

@@ -1,36 +1,156 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Grungerad.net - Zenless Zone Zero Team Builder
+
+A comprehensive team optimization and character management tool for Zenless Zone Zero players, built with the latest web technologies.
+
+## Tech Stack
+
+- **Next.js 16.0.10** with App Router and Turbopack
+- **React 19.2.3** with TypeScript 5.9.3
+- **Material-UI 7.3.6** for UI components
+- **Firebase Hosting** for deployment
+- **Internationalization** (Japanese/English support)
+
+## Features
+
+- **Team Builder**: Algorithm-based team composition optimization
+- **Character Randomizer**: Random team generation with advanced filtering
+- **Multilingual Support**: Full Japanese and English localization
+- **Dark/Light Theme**: Material-UI theming with user preference persistence
+- **Mobile Responsive**: Optimized for all device sizes
 
 ## Getting Started
 
-First, run the development server:
+### Prerequisites
+
+- Node.js 18+
+- npm or yarn package manager
+
+### Installation
+
+1. Clone the repository:
+
+```bash
+git clone <repository-url>
+cd grungeard-net
+```
+
+2. Install dependencies:
+
+```bash
+npm install
+```
+
+3. Initialize submodules (for game data):
+
+```bash
+git submodule update --init --recursive
+```
+
+### Development
+
+Start the development server with Turbopack:
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000) to view the application.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+The page auto-updates as you edit files thanks to Next.js hot reloading.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### Available Scripts
+
+```bash
+npm run dev      # Start development server with Turbopack
+npm run build    # Build for production with Turbopack
+npm run start    # Start production server
+npm run lint     # Run ESLint code quality checks
+```
+
+## Project Structure
+
+```
+src/
+├── app/[lang]/          # Next.js App Router with i18n
+│   ├── page.tsx         # Home page
+│   ├── team-builder/    # Team optimization tool
+│   └── randomizer/      # Character randomizer
+├── components/          # Reusable UI components
+├── data/               # Static game data
+└── stores/             # State management
+
+public/assets/images/    # Game assets (characters, weapons, etc.)
+submodule/zzz-wiki-scrap/ # External data source
+```
+
+## Internationalization
+
+The application supports Japanese (default) and English:
+
+- Routes use `[lang]` dynamic segments: `/ja/team-builder`, `/en/team-builder`
+- All content has both language versions
+- Automatic locale detection based on browser preferences
+- Manual language switching available in the UI
+
+## Development Guidelines
+
+### Code Style
+
+- **TypeScript**: Strict mode enabled, no `any` types
+- **Components**: Functional components with proper TypeScript interfaces
+- **Styling**: Material-UI `sx` prop or `styled()` components only
+- **File Naming**: PascalCase for components, camelCase for utilities
+
+### Key Patterns
+
+- Use Next.js Image component for all images
+- Implement proper error boundaries and loading states
+- Follow Material-UI theming for consistent styling
+- Use path aliases: `@/*` maps to `./src/*`
+
+## Game Data
+
+Character, weapon, and enemy data is sourced from the `zzz-wiki-scrap` submodule, which provides:
+
+- Character stats and abilities
+- Weapon information and compatibility
+- Enemy data for team optimization
+- Multilingual content (Japanese/English)
+
+## Deployment
+
+The application is deployed on Firebase Hosting:
+
+```bash
+npm run build
+firebase deploy
+```
+
+## Recent Updates
+
+**December 2024**: Updated to latest stable versions
+
+- React 19.1.0 → 19.2.3
+- Next.js 15.5.4 → 16.0.10
+- Material-UI 7.3.2 → 7.3.6
+- Enhanced Turbopack performance
+- Improved TypeScript support
 
 ## Learn More
 
-To learn more about Next.js, take a look at the following resources:
+- [Next.js Documentation](https://nextjs.org/docs) - Next.js features and API
+- [React Documentation](https://react.dev/) - React concepts and patterns
+- [Material-UI Documentation](https://mui.com/) - Component library
+- [Zenless Zone Zero](https://zenless.hoyoverse.com/) - Official game website
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Contributing
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+1. Fork the repository
+2. Create a feature branch
+3. Follow the established code style and patterns
+4. Test your changes thoroughly
+5. Submit a pull request
 
-## Deploy on Vercel
+## License
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+This project is for educational and community purposes. Game assets and data belong to their respective owners.
